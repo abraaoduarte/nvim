@@ -15,6 +15,8 @@ return {
         },
 
         config = function()
+            local util = require 'lspconfig.util'
+
             local cmp = require('cmp')
             local cmp_lsp = require("cmp_nvim_lsp")
             local capabilities = vim.tbl_deep_extend(
@@ -48,20 +50,90 @@ return {
                     ["tsserver"] = function()
                         local lspconfig = require("lspconfig")
                         lspconfig.tsserver.setup({
-                            capabilities = capabilities
+                            capabilities = capabilities,
+                            filetypes = {
+                                'javascript',
+                                'javascriptreact',
+                                'javascript.jsx',
+                                'typescript',
+                                'typescriptreact',
+                                'typescript.tsx'
+                            },
                         })
                     end,
 
                     ["eslint"] = function()
                         local lspconfig = require("lspconfig")
                         lspconfig.eslint.setup({
-                            settings = {
-                                useFlatConfig = true,
-                                experimental = {
-                                    useFlatConfig = nil, -- option not in the latest eslint-lsp
-                                },
+                            capabilities = capabilities,
+                            filetypes = {
+                                'javascript',
+                                'javascriptreact',
+                                'json',
+                                'jsonc',
+                                'typescript',
+                                'typescript.tsx',
+                                'typescriptreact',
+                                'astro',
+                                'svelte',
+                                'vue',
+                                'css',
                             },
-                            capabilities = capabilities
+                            root_dir = util.root_pattern(
+                                '.eslintrc',
+                                '.eslintrc.js',
+                                '.eslintrc.cjs',
+                                '.eslintrc.yaml',
+                                '.eslintrc.yml',
+                                '.eslintrc.json',
+                                'eslint.config.js',
+                                'eslint.config.mjs',
+                                'eslint.config.cjs',
+                                'eslint.config.ts',
+                                'eslint.config.mts',
+                                'eslint.config.cts'
+                            ),
+                            settings = {
+                                codeActionOnSave = {
+                                    enable = true,
+                                    mode = "all"
+                                },
+                            }
+                        })
+                    end,
+
+                    --  ["eslint"] = function()
+                    --      local lspconfig = require("lspconfig")
+                    --      lspconfig.eslint.setup({
+                    --          settings = {
+                    --              useFlatConfig = true,
+                    --              experimental = {
+                    --                  useFlatConfig = nil, -- option not in the latest eslint-lsp
+                    --              },
+                    --          },
+                    --          capabilities = capabilities
+                    --      })
+                    --  end,
+
+                    ["biome"] = function()
+                        local lspconfig = require("lspconfig")
+                        lspconfig.biome.setup({
+                            capabilities = capabilities,
+                            filetypes = {
+                                'javascript',
+                                'javascriptreact',
+                                'json',
+                                'jsonc',
+                                'typescript',
+                                'typescript.tsx',
+                                'typescriptreact',
+                                'astro',
+                                'svelte',
+                                'vue',
+                                'css',
+                            },
+                            root_dir = util.root_pattern('biome.json', 'biome.jsonc')
+
                         })
                     end,
 
@@ -152,7 +224,7 @@ return {
             local null_ls = require("null-ls")
             null_ls.setup({
                 sources = {
-                    -- require("none-ls.diagnostics.eslint_d"),
+                    --  require("none-ls.diagnostics.eslint_d"),
                     null_ls.builtins.formatting.stylua,
                     null_ls.builtins.formatting.goimports,
                     null_ls.builtins.formatting.gofumpt,
