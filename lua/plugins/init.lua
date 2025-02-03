@@ -6,6 +6,7 @@ local augroup = vim.api.nvim_create_augroup
 local PluginGroup = augroup('PluginGroup', {})
 
 local autocmd = vim.api.nvim_create_autocmd
+vim.opt.termguicolors = true
 
 vim.filetype.add({
     extension = {

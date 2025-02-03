@@ -39,6 +39,22 @@ cab Q  q
 cab Qa  qa
 ]]
 
+-- split vertial
+normal_map('<leader>vv', ':vsplit<CR>')
+
+normal_map('<leader>pa', 'ggVGp', { desc = "select all and paste" })
+normal_map('<leader>sa', 'ggVG', { desc = "select all" })
+normal_map("<leader>gp", "`[v`]", { desc = "select pasted text" })
+
+vim.keymap.set("n", "<leader>mj", ":m .+1<CR>==", { desc = "Move line down" })
+vim.keymap.set("n", "<leader>mk", ":m .-2<CR>==", { desc = "Move line up" })
+vim.keymap.set("v", "<leader>mj", ":m '>+1<CR>gv=gv", { desc = "Move Line Down in Visual Mode" })
+vim.keymap.set("v", "<leader>mk", ":m '<-2<CR>gv=gv", { desc = "Move Line Up in Visual Mode" })
+
+
+vim.keymap.set("n", "<leader>sl", [[:s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+vim.keymap.set("n", "<leader>/", ":nohl<CR>", { silent = true })
+
 -- close and save stuff
 normal_map('<leader>w', '<cmd>w<cr>')
 normal_map('<leader>W', '<cmd>wq<cr>')
